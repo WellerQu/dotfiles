@@ -2,6 +2,7 @@
 " General Configuration
 " ===============================================================================
 
+let mapleader=','
 set nocompatible  " Use the vim's keyboard setting, not vi
 
 set nu  " Set the line number
@@ -79,8 +80,15 @@ autocmd bufnewfile *.py call HeaderPython()
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
 call plug#end()
 
+" -------------------------------------------------------------------------------
+" nerdtree
+" -------------------------------------------------------------------------------
+nmap <leader>e :NERDTreeToggle<CR>
 
 " -------------------------------------------------------------------------------
 " nerdtree-git-plugin

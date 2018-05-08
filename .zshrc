@@ -61,6 +61,7 @@ ZSH_THEME="muse"
 plugins=(
   git
   tmux
+  tig
 )
 
 source $ZSH/oh-my-zsh.sh
