@@ -77,6 +77,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'ervandew/supertab'
 Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'wakatime/vim-wakatime'
 " FE dev
 Plug 'hail2u/vim-css3-syntax'
 Plug 'mattn/emmet-vim'
