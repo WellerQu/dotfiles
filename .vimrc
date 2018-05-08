@@ -3,6 +3,7 @@
 " ===============================================================================
 
 let mapleader=','
+imap jj <ESC>
 set nocompatible  " Use the vim's keyboard setting, not vi
 
 set nu  " Set the line number
@@ -60,35 +61,32 @@ set foldlevel=99
 
 au BufRead,BufNewFile *.md set filetype=markdown  " .md default is modula2
 
-" Execute python file being edited with <Shift> + e:
-map <buffer> <S-e> :w<CR>:!/usr/bin/env python % <CR>
-
-" Auto add head info
-" .py file auto add header
-function HeaderPython()
-    call setline(1, "#!/usr/bin/env python")
-    call append(1,  "# -*- coding: utf-8 -*-")
-    call append(2,  "# Tanky Woo @ " . strftime('%Y-%m-%d', localtime()))
-    normal G
-    normal o
-endf
-autocmd bufnewfile *.py call HeaderPython() 
-
 " -------------------------------------------------------------------------------
 " Plugins
 " -------------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
+" Common
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'ervandew/supertab'
+Plug 'kristijanhusak/vim-hybrid-material'
+" FE dev
+Plug 'hail2u/vim-css3-syntax'
+Plug 'mattn/emmet-vim'
+Plug 'ternjs/tern_for_vim'
 call plug#end()
 
 " -------------------------------------------------------------------------------
 " nerdtree
 " -------------------------------------------------------------------------------
-nmap <leader>e :NERDTreeToggle<CR>
+nmap <leader>ne :NERDTreeToggle<CR>
 
 " -------------------------------------------------------------------------------
 " nerdtree-git-plugin
@@ -105,3 +103,81 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+" -------------------------------------------------------------------------------
+" easymotion + incsearch + fuzzy
+" -------------------------------------------------------------------------------
+" You can use other keymappings like <C-l> instead of <CR> if you want to
+" use these mappings as default search and somtimes want to move cursor with
+" EasyMotion.
+function! s:incsearch_config(...) abort
+  return incsearch#util#deepextend(deepcopy({
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {
+  \     "\<CR>": '<Over>(easymotion)'
+  \   },
+  \   'is_expr': 0
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
+noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
+noremap <silent><expr> g/ incsearch#go(<SID>incsearch_config({'is_stay': 1}))
+
+function! s:config_easyfuzzymotion(...) abort
+  return extend(copy({
+  \   'converters': [incsearch#config#fuzzyword#converter()],
+  \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
+  \   'keymap': {"\<CR>": '<Over>(easymotion)'},
+  \   'is_expr': 0,
+  \   'is_stay': 1
+  \ }), get(a:, 1, {}))
+endfunction
+
+noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
+
+
+" -------------------------------------------------------------------------------
+" vim-airline
+" -------------------------------------------------------------------------------
+" Keep vim-powerline configuration opened
+" In Mac with iTerm2, need to select patched font for non-ascii font, in
+" Profiles -> Text
+let g:airline_powerline_fonts = 1
+
+" ----------------------------------------------------------------------------
+" airblade/vim-gitgutter
+" ----------------------------------------------------------------------------
+let g:gitgutter_max_signs = 500
+"let g:gitgutter_highlight_lines = 1
+highlight clear SignColumn
+
+" -------------------------------------------------------------------------------
+" ref: http://stackoverflow.com/questions/158968/changing-vim-indentation-behavior-by-file-type
+" -------------------------------------------------------------------------------
+autocmd FileType html set shiftwidth=2|set expandtab
+autocmd FileType css setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType sh setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+
+" -------------------------------------------------------------------------------
+" Others
+" -------------------------------------------------------------------------------
+set t_Co=256 " 使用256配色
+set background=dark
+colorscheme hybrid_reverse
+
+"Fast reloading of the .vimrc
+map <silent> <leader>vs :source ~/.vimrc<cr>
+"Fast editing of .vimrc
+map <silent> <leader>ve :e ~/.vimrc<cr>
+"When .vimrc is edited, reload it
+autocmd! bufwritepost .vimrc source ~/.vimrc 
+
+if exists('$TMUX')
+    set term=screen-256color
+endif
+
+set clipboard=unnamed
