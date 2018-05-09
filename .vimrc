@@ -56,6 +56,15 @@ set foldmethod=indent  " The kind of folding used for the current window
 set foldlevel=99
 
 " -------------------------------------------------------------------------------
+" Easy Map
+" -------------------------------------------------------------------------------
+inoremap ' ''<ESC>i
+inoremap " ""<ESC>i
+inoremap ( ()<ESC>i
+inoremap [ []<ESC>i
+inoremap { {<CR>}<ESC>O
+
+" -------------------------------------------------------------------------------
 " Enhanced
 " -------------------------------------------------------------------------------
 
@@ -73,7 +82,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch-easymotion.vim'
-Plug 'vim-airline/vim-airline'
+Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'ervandew/supertab'
 Plug 'kristijanhusak/vim-hybrid-material'
@@ -83,12 +92,31 @@ Plug 'prettier/vim-prettier', {
     \ 'do': 'npm install',
     \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
 Plug 'Shougo/neocomplete.vim'
+Plug 'tpope/vim-surround'
+Plug 'kien/ctrlp.vim'
+Plug 'rking/ag.vim'  
 " FE dev
 Plug 'hail2u/vim-css3-syntax'
 Plug 'mattn/emmet-vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'pangloss/vim-javascript'
 call plug#end()
+
+" -------------------------------------------------------------------------------
+" Ag
+" -------------------------------------------------------------------------------
+"usage :Ag [options] {pattern} [{directory}]
+"shortcuts
+"e    to open file and close the quickfix window
+"o    to open (same as enter)
+"go   to preview file (open but maintain focus on ag.vim results)
+"t    to open in new tab
+"T    to open in new tab silently
+"h    to open in horizontal split
+"H    to open in horizontal split silently
+"v    to open in vertical split
+"gv   to open in vertical split silently
+"q    to close the quickfix window
 
 " -------------------------------------------------------------------------------
 " nerdtree
@@ -150,7 +178,8 @@ noremap <silent><expr> <Space>/ incsearch#go(<SID>config_easyfuzzymotion())
 " Keep vim-powerline configuration opened
 " In Mac with iTerm2, need to select patched font for non-ascii font, in
 " Profiles -> Text
-let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'default'
 
 " ----------------------------------------------------------------------------
 " airblade/vim-gitgutter
