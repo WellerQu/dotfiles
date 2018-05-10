@@ -1,0 +1,20 @@
+# Header
+# <type>(<scope>): <subject>
+# *type* field is required, you can pick one in belows:
+#   - feat: new feature
+#   - fix: fix bugs
+#   - docs: documentation
+#   - style: just only format code, does not affect results
+#   - refactor: reconstruction
+#   - test: add test case
+#   - chore: changes of building process or tools
+#   - revert: undo previous commits
+# *scope* field is optional, you can write something what be affected
+# *subject* field is required, you can write the short description of commit
+
+# Body
+# <description>
+# *description* is required, a detailed description
+
+# Footer
+# <incompatiblie actions> or <close issues>

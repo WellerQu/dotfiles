@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
+# set -e
+# set -x
 
-dotfiles=(".zshrc" ".vimrc" ".gitconfig")
+dotfiles=(".zshrc" ".vimrc" ".gitconfig" ".gitmessage")
 
 create_symlinks() {
   for file in "${dotfiles[@]}"
   do
     ln -sf ${PWD}/${file} ${HOME}/${file}
-    echo ${PWD}/${file} ${HOME}/${file}
+    echo link ${PWD}/${file} ${HOME}/${file}
   done
 }
 
@@ -17,7 +17,7 @@ remove_symlinks() {
   for file in "${dotfiles[@]}"
   do
     unlink ${HOME}/${file}
-    echo ${HOME}/${file}
+    echo unlink ${HOME}/${file}
   done
 }
 

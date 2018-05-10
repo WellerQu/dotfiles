@@ -11,7 +11,8 @@
 	tool = vimdiff
 [difftool]
 	prompt = false
-
+[commit]
+	template= ~/.gitmessage
 [alias]
 	st = status
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
