@@ -96,3 +96,4 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="/usr/local/bin/vim"
+alias vi="/usr/local/vi"
