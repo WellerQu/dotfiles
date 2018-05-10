@@ -97,3 +97,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="/usr/local/bin/vim"
 alias vi="/usr/local/vi"
+alias rm="rm -i"
+
+# Export environmant variable
+source ./go.sh
