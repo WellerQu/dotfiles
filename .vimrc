@@ -64,6 +64,8 @@ inoremap ( ()<ESC>i
 inoremap [ []<ESC>i
 inoremap { {}<ESC>i
 inoremap ` ``<ESC>i
+inoremap <C-f> <ESC>la
+inoremap <C-b> <ESC>ha
 
 " -------------------------------------------------------------------------------
 " Enhanced
