@@ -3,7 +3,7 @@
 # set -e
 # set -x
 
-dotfiles=(".zshrc" ".vimrc" ".gitconfig" ".gitmessage")
+dotfiles=(".zshrc" ".vimrc" ".gitconfig" ".gitmessage" ".tmux.conf")
 
 create_symlinks() {
   for file in "${dotfiles[@]}"

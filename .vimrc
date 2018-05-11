@@ -103,6 +103,8 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'mattn/emmet-vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'pangloss/vim-javascript'
+" Golang"
+Plug 'fatih/vim-go'
 call plug#end()
 
 " -------------------------------------------------------------------------------
