@@ -100,4 +100,5 @@ alias vi="/usr/local/vi"
 alias rm="rm -i"
 
 # Export environmant variable
-source ./go.sh
+# source ./go.sh
+source ~/dotfiles/java.sh

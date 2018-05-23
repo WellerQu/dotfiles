@@ -3,8 +3,9 @@
 " ===============================================================================
 
 let mapleader=','
-imap jj <ESC>
 set nocompatible  " Use the vim's keyboard setting, not vi
+set noswapfile    " disable swap file permanently"
+set cot-=preview
 
 set nu  " Set the line number
 syntax on  " Syntax highlighting
@@ -18,7 +19,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set smarttab
-"set expandtab  " Use the space to instead of tab
+set expandtab  " Use the space to instead of tab
 set autoindent  " Copy indent from current line when starting a new line
 set smartindent
 set cindent
@@ -58,14 +59,16 @@ set foldlevel=99
 " -------------------------------------------------------------------------------
 " Easy Map
 " -------------------------------------------------------------------------------
-inoremap ' ''<ESC>i
-inoremap " ""<ESC>i
-inoremap ( ()<ESC>i
-inoremap [ []<ESC>i
-inoremap { {}<ESC>i
-inoremap ` ``<ESC>i
+" ESC quickly
+imap jj <ESC>
+" move cursor
 inoremap <C-f> <ESC>la
 inoremap <C-b> <ESC>ha
+" get filename, full path, directory, relative path
+nnoremap <leader>ff :let @+ = expand("%:t")<CR>
+nnoremap <leader>fp :let @+ = expand("%:p")<CR>
+nnoremap <leader>fd :let @+ = expand("%:p:h")<CR>
+nnoremap <leader>fr :let @+ = expand("%")<CR>
 
 " -------------------------------------------------------------------------------
 " Enhanced
@@ -77,6 +80,19 @@ au BufRead,BufNewFile *.md set filetype=markdown  " .md default is modula2
 " Plugins
 " -------------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
+" FE dev
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'mattn/emmet-vim'
+Plug 'ternjs/tern_for_vim'
+Plug 'pangloss/vim-javascript'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'posva/vim-vue'
+"Plug 'isRuslan/vim-es6'
+Plug 'SirVer/ultisnips'
+Plug 'epilande/vim-es2015-snippets'
+" Golang"
+"Plug 'fatih/vim-go'
 " Common
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs'
@@ -98,13 +114,9 @@ Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'  
-" FE dev
-Plug 'hail2u/vim-css3-syntax'
-Plug 'mattn/emmet-vim'
-Plug 'ternjs/tern_for_vim'
-Plug 'pangloss/vim-javascript'
-" Golang"
-Plug 'fatih/vim-go'
+Plug 'jiangmiao/auto-pairs'
+" Java
+Plug 'artur-shaik/vim-javacomplete2'
 call plug#end()
 
 " -------------------------------------------------------------------------------
@@ -212,19 +224,19 @@ let g:prettier#config#tab_width = 2
 let g:prettier#config#use_tabs = 'false'
 
 " print semicolons
-let g:prettier#config#semi = 'true'
+let g:prettier#config#semi = 'false'
 
 " single quotes over double quotes
 let g:prettier#config#single_quote = 'true'
 
 " print spaces between brackets
-let g:prettier#config#bracket_spacing = 'false'
+let g:prettier#config#bracket_spacing = 'true'
 
 " put > on the last line instead of new line
 let g:prettier#config#jsx_bracket_same_line = 'true'
 
 " none|es5|all
-let g:prettier#config#trailing_comma = 'all'
+let g:prettier#config#trailing_comma = 'none'
 
 " flow|babylon|typescript|postcss
 let g:prettier#config#parser = 'flow'
@@ -245,7 +257,7 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDAltDelims_java = 1
 
 " Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' }, 'javascript': { 'left': '/**', 'right': '*/' } }
 
 " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDCommentEmptyLines = 1
@@ -257,7 +269,7 @@ let g:NERDTrimTrailingWhitespace = 1
 " Shougo/neocomplete.vim
 " ----------------------------------------------------------------------------
 " Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
+let g:acp_enableAtStartup = 1
 " Use neocomplete.
 let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
@@ -290,7 +302,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
 " AutoComplPop like behavior.
 let g:neocomplete#enable_auto_select = 1
@@ -301,11 +313,71 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=tern#Complete  " for ternjs
 autocmd FileType python setlocal omnifunc=jedi#completions  " for jedi
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
+
+" -------------------------------------------------------------------------------
+" javascript-libraries-syntax.vim
+" -------------------------------------------------------------------------------
+let g:used_javascript_libs = 'react,vue'
+
+" -------------------------------------------------------------------------------
+" vim-es6
+" -------------------------------------------------------------------------------
+"Trigger	Result
+"gfn→	function* name (arg) { yield arg; }
+"=>→	(arg) => { ... },
+"class→	class name { constructor () { ...} }
+"forof→	for (let value of arr) { ... }
+"im→	import lib from 'Library'
+"ex→	export default foo
+
+" -------------------------------------------------------------------------------
+" JavaComplete2
+" -------------------------------------------------------------------------------
+nmap <leader>jI <Plug>(JavaComplete-Imports-AddMissing)
+nmap <leader>jR <Plug>(JavaComplete-Imports-RemoveUnused)
+nmap <leader>ji <Plug>(JavaComplete-Imports-AddSmart)
+nmap <leader>jii <Plug>(JavaComplete-Imports-Add)
+
+imap <C-j>I <Plug>(JavaComplete-Imports-AddMissing)
+imap <C-j>R <Plug>(JavaComplete-Imports-RemoveUnused)
+imap <C-j>i <Plug>(JavaComplete-Imports-AddSmart)
+imap <C-j>ii <Plug>(JavaComplete-Imports-Add)
+
+nmap <leader>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+
+imap <C-j>jM <Plug>(JavaComplete-Generate-AbstractMethods)
+
+nmap <leader>jA <Plug>(JavaComplete-Generate-Accessors)
+nmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+nmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+nmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+nmap <leader>jts <Plug>(JavaComplete-Generate-ToString)
+nmap <leader>jeq <Plug>(JavaComplete-Generate-EqualsAndHashCode)
+nmap <leader>jc <Plug>(JavaComplete-Generate-Constructor)
+nmap <leader>jcc <Plug>(JavaComplete-Generate-DefaultConstructor)
+
+imap <C-j>s <Plug>(JavaComplete-Generate-AccessorSetter)
+imap <C-j>g <Plug>(JavaComplete-Generate-AccessorGetter)
+imap <C-j>a <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+vmap <leader>js <Plug>(JavaComplete-Generate-AccessorSetter)
+vmap <leader>jg <Plug>(JavaComplete-Generate-AccessorGetter)
+vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
+
+nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
+nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
 
 " -------------------------------------------------------------------------------
 " ref: http://stackoverflow.com/questions/158968/changing-vim-indentation-behavior-by-file-type

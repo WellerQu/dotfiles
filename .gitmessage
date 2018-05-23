@@ -12,9 +12,11 @@
 # *scope* field is optional, you can write something what be affected
 # *subject* field is required, you can write the short description of commit
 
+
 # Body
 # <description>
 # *description* is required, a detailed description
+
 
 # Footer
 # <incompatiblie actions> or <close issues>
