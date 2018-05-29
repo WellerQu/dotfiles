@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+# install list:
+# brew install tmux
+# brew install tig
+# brew install vim --with-lua --with-override=system-vi
+# brew install ctags-exuberant
+# brew link --overwrite ctags
+
 # set -e
 # set -x
 

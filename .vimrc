@@ -69,6 +69,10 @@ nnoremap <leader>ff :let @+ = expand("%:t")<CR>
 nnoremap <leader>fp :let @+ = expand("%:p")<CR>
 nnoremap <leader>fd :let @+ = expand("%:p:h")<CR>
 nnoremap <leader>fr :let @+ = expand("%")<CR>
+" if file name is 'abc.txt'
+" expand(‘%:e’) " only extension name e.g. .txt
+" expand(‘%:t:r’) " only name but extension name abc
+" more info see :help expand
 
 " -------------------------------------------------------------------------------
 " Enhanced
@@ -93,6 +97,9 @@ Plug 'SirVer/ultisnips'
 Plug 'epilande/vim-es2015-snippets'
 " Golang"
 "Plug 'fatih/vim-go'
+" Java
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'majutsushi/tagbar'
 " Common
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'jistr/vim-nerdtree-tabs'
@@ -115,8 +122,11 @@ Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
 Plug 'rking/ag.vim'  
 Plug 'jiangmiao/auto-pairs'
-" Java
-Plug 'artur-shaik/vim-javacomplete2'
+Plug 'vim-scripts/mru.vim'
+Plug 'LucHermitte/lh-vim-lib'
+Plug 'LucHermitte/local_vimrc'
+Plug 'xolox/vim-misc'  " vim-easytags requires this
+Plug 'xolox/vim-easytags'
 call plug#end()
 
 " -------------------------------------------------------------------------------
@@ -378,6 +388,49 @@ vmap <leader>ja <Plug>(JavaComplete-Generate-AccessorSetterGetter)
 
 nmap <silent> <buffer> <leader>jn <Plug>(JavaComplete-Generate-NewClass)
 nmap <silent> <buffer> <leader>jN <Plug>(JavaComplete-Generate-ClassInFile)
+
+" -------------------------------------------------------------------------------
+" majutsushi/tagbar
+" -------------------------------------------------------------------------------
+nmap <leader>t :TagbarOpenAutoClose<CR>
+
+
+" -------------------------------------------------------------------------------
+" mru
+" -------------------------------------------------------------------------------
+let g:MRU_File = '~/.vim/mru'
+let g:MRU_Max_Entries = 20
+let g:MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'  " For Unix
+let g:MRU_Include_Files = '\.c$\|\.h$|\.js[x]?$'
+let g:MRU_Window_Height = 15
+let g:MRU_Use_Current_Window = 1
+let g:MRU_Auto_Close = 0
+let g:MRU_Add_Menu = 0
+
+" -------------------------------------------------------------------------------
+" vim-easytags
+" -------------------------------------------------------------------------------
+" Default/Generic tag file
+set tags=./tag,s~/.vim/.tag
+
+let g:easytags_dynamic_files = 1
+let geasytags_autorecurse = 1
+let g:easytags_file = '~/.vim/tags'
+let g:easytags_by_filetype = expand("~/.vim/tags/")
+let g:easytags_resolve_links = 1
+let g:easytags_updatetime_warn = 0
+"let g:easytags_async = 1
+let g:geasytags_events = ['BufWritePost']
+"let g:easytags_languages = { 'php': { 'args': [ '--php-kinds=ncf', '--languages=+JavaScript' ] } }
+
+" Filetype specific tag files (This is used for global IDE tags)
+autocmd FileType c              set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
+autocmd FileType cpp            set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
+autocmd FileType css            set tags=.tags_css,$HOME/.vim/tags/tags_css
+autocmd FileType java           set tags=.tags_java,$HOME/.vim/tags/tags_java
+autocmd FileType javascript     set tags=.tags_js,$HOME/.vim/tags/tags_js
+autocmd FileType html           set tags=.tags_html,$HOME/.vim/tags/tags_html
+autocmd FileType sh             set tags=.tags_sh,$HOME/.vim/tags/tags_sh
 
 " -------------------------------------------------------------------------------
 " ref: http://stackoverflow.com/questions/158968/changing-vim-indentation-behavior-by-file-type
