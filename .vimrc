@@ -6,6 +6,8 @@ let mapleader=','
 set nocompatible  " Use the vim's keyboard setting, not vi
 set noswapfile    " disable swap file permanently"
 set cot-=preview
+set nocursorline
+set nocursorcolumn
 
 set nu  " Set the line number
 syntax on  " Syntax highlighting
@@ -48,13 +50,23 @@ set fileencodings=utf-8,gb18030,cp936,big5 " Set the encode
 set pastetoggle=<leader>p
 set backspace=2 " same as ":set backspace=indent,eol,start" in vim7.4
 
+" quicker completion
+set complete-=i   " disable scanning included files
+set complete-=t   " disable searching tags
+
 " Press `shift` while selecting with the mouse can disable into visual mode
 " In mac os, hold `alt/option` is easier
 " ref: http://stackoverflow.com/questions/4608161/copy-text-out-of-vim-with-set-mouse-a-enabled
 "set mouse=a  " Enable mouse
 
-set foldmethod=indent  " The kind of folding used for the current window
+" fold rule
+set foldmethod=marker  " The kind of folding used for the current window
 set foldlevel=99
+" synmaxcol
+set synmaxcol=200
+
+" Matchlt
+" packadd! matchit
 
 " -------------------------------------------------------------------------------
 " Easy Map
@@ -64,6 +76,12 @@ imap jj <ESC>
 " move cursor
 inoremap <C-f> <ESC>la
 inoremap <C-b> <ESC>ha
+" move line
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+" insert space line
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " get filename, full path, directory, relative path
 nnoremap <leader>ff :let @+ = expand("%:t")<CR>
 nnoremap <leader>fp :let @+ = expand("%:p")<CR>
@@ -73,6 +91,10 @@ nnoremap <leader>fr :let @+ = expand("%")<CR>
 " expand(‘%:e’) " only extension name e.g. .txt
 " expand(‘%:t:r’) " only name but extension name abc
 " more info see :help expand
+
+" indent
+xnoremap <  <gv
+xnoremap >  >gv
 
 " -------------------------------------------------------------------------------
 " Enhanced
@@ -95,8 +117,9 @@ Plug 'posva/vim-vue'
 "Plug 'isRuslan/vim-es6'
 Plug 'SirVer/ultisnips'
 Plug 'epilande/vim-es2015-snippets'
+Plug 'Chiel92/vim-autoformat'
 " Golang"
-"Plug 'fatih/vim-go'
+Plug 'fatih/vim-go'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'majutsushi/tagbar'
@@ -114,9 +137,9 @@ Plug 'ervandew/supertab'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'wakatime/vim-wakatime'
 Plug 'scrooloose/nerdcommenter'
-Plug 'prettier/vim-prettier', {
-    \ 'do': 'npm install',
-    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
+"Plug 'prettier/vim-prettier', {
+"    \ 'do': 'npm install',
+"    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-surround'
 Plug 'kien/ctrlp.vim'
@@ -125,8 +148,9 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'vim-scripts/mru.vim'
 Plug 'LucHermitte/lh-vim-lib'
 Plug 'LucHermitte/local_vimrc'
-Plug 'xolox/vim-misc'  " vim-easytags requires this
-Plug 'xolox/vim-easytags'
+"Plug 'xolox/vim-misc'  " vim-easytags requires this
+"Plug 'xolox/vim-easytags'
+Plug 'mxw/vim-jsx'
 call plug#end()
 
 " -------------------------------------------------------------------------------
@@ -219,37 +243,43 @@ highlight clear SignColumn
 " prettier/vim-prettier
 " https://prettier.io/docs/en/vim.html#vim-prettier-configuration
 " -------------------------------------------------------------------------------
-let g:prettier#autoformat = 0
-let g:prettier#exec_cmd_async = 1
-let g:prettier#quickfix_enabled = 0
+"let g:prettier#autoformat = 0
+"let g:prettier#exec_cmd_async = 1
+"let g:prettier#quickfix_enabled = 0
+"
+"autocmd BufWritePre *.js,*.css,*.scss,*.less,*.vue PrettierAsync
+"" max line lengh that prettier will wrap on
+"let g:prettier#config#print_width = 120
+"
+"" number of spaces per indentation level
+"let g:prettier#config#tab_width = 2
+"
+"" use tabs over spaces
+"let g:prettier#config#use_tabs = 'false'
+"
+"" print semicolons
+"let g:prettier#config#semi = 'false'
+"
+"" single quotes over double quotes
+"let g:prettier#config#single_quote = 'true'
+"
+"" print spaces between brackets
+"let g:prettier#config#bracket_spacing = 'true'
+"
+"" put > on the last line instead of new line
+"let g:prettier#config#jsx_bracket_same_line = 'true'
+"
+"" none|es5|all
+"let g:prettier#config#trailing_comma = 'none'
+"
+"" flow|babylon|typescript|postcss
+"let g:prettier#config#parser = 'flow'
 
-autocmd BufWritePre *.js,*.css,*.scss,*.less PrettierAsync
-" max line lengh that prettier will wrap on
-let g:prettier#config#print_width = 120
-
-" number of spaces per indentation level
-let g:prettier#config#tab_width = 2
-
-" use tabs over spaces
-let g:prettier#config#use_tabs = 'false'
-
-" print semicolons
-let g:prettier#config#semi = 'false'
-
-" single quotes over double quotes
-let g:prettier#config#single_quote = 'true'
-
-" print spaces between brackets
-let g:prettier#config#bracket_spacing = 'true'
-
-" put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true'
-
-" none|es5|all
-let g:prettier#config#trailing_comma = 'none'
-
-" flow|babylon|typescript|postcss
-let g:prettier#config#parser = 'flow'
+" -------------------------------------------------------------------------------
+" Chiel92/vim-autoformat
+" -------------------------------------------------------------------------------
+"au BufWritePre *.js :Autoformat
+"au BufWritePre *.jsx :Autoformat
 
 " -------------------------------------------------------------------------------
 " scrooloose/nerdcommenter
@@ -411,26 +441,31 @@ let g:MRU_Add_Menu = 0
 " vim-easytags
 " -------------------------------------------------------------------------------
 " Default/Generic tag file
-set tags=./tag,s~/.vim/.tag
+"set tags=./tag,s~/.vim/.tag
 
-let g:easytags_dynamic_files = 1
-let geasytags_autorecurse = 1
-let g:easytags_file = '~/.vim/tags'
-let g:easytags_by_filetype = expand("~/.vim/tags/")
-let g:easytags_resolve_links = 1
-let g:easytags_updatetime_warn = 0
 "let g:easytags_async = 1
-let g:geasytags_events = ['BufWritePost']
+"let g:easytags_dynamic_files = 1
+"let geasytags_autorecurse = 1
+"let g:easytags_file = '~/.vim/tags'
+"let g:easytags_by_filetype = expand("~/.vim/tags/")
+"let g:easytags_resolve_links = 1
+"let g:easytags_updatetime_warn = 0
+"let g:geasytags_events = ['BufWritePost']
 "let g:easytags_languages = { 'php': { 'args': [ '--php-kinds=ncf', '--languages=+JavaScript' ] } }
 
 " Filetype specific tag files (This is used for global IDE tags)
-autocmd FileType c              set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
-autocmd FileType cpp            set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
-autocmd FileType css            set tags=.tags_css,$HOME/.vim/tags/tags_css
-autocmd FileType java           set tags=.tags_java,$HOME/.vim/tags/tags_java
-autocmd FileType javascript     set tags=.tags_js,$HOME/.vim/tags/tags_js
-autocmd FileType html           set tags=.tags_html,$HOME/.vim/tags/tags_html
-autocmd FileType sh             set tags=.tags_sh,$HOME/.vim/tags/tags_sh
+"autocmd FileType c              set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
+"autocmd FileType cpp            set tags=.tags_cpp,$HOME/.vim/tags/tags_cpp
+"autocmd FileType css            set tags=.tags_css,$HOME/.vim/tags/tags_css
+"autocmd FileType java           set tags=.tags_java,$HOME/.vim/tags/tags_java
+"autocmd FileType javascript     set tags=.tags_js,$HOME/.vim/tags/tags_js
+"autocmd FileType html           set tags=.tags_html,$HOME/.vim/tags/tags_html
+"autocmd FileType sh             set tags=.tags_sh,$HOME/.vim/tags/tags_sh
+
+" -------------------------------------------------------------------------------
+" fatih/vim-go
+" https://github.com/fatih/vim-go#features
+" -------------------------------------------------------------------------------
 
 " -------------------------------------------------------------------------------
 " ref: http://stackoverflow.com/questions/158968/changing-vim-indentation-behavior-by-file-type
@@ -441,6 +476,9 @@ autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
 autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
+" autocmd InsertLeave,WinEnter * set cursorline
+" autocmd InsertEnter,WinLeave * set nocursorline
 
 " -------------------------------------------------------------------------------
 " Others

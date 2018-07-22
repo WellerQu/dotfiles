@@ -63,6 +63,8 @@ plugins=(
   tmux
   tig
   vi-mode
+  zsh-syntax-highlighting
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -98,7 +100,12 @@ source $ZSH/oh-my-zsh.sh
 alias vim="/usr/local/bin/vim"
 alias vi="/usr/local/vi"
 alias rm="rm -i"
+alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
 
 # Export environmant variable
-# source ./go.sh
+source ~/dotfiles/go.sh
 source ~/dotfiles/java.sh
+source ~/dotfiles/mongo.sh
+
+# Startup
+source ~/dotfiles/.zsh.startup
