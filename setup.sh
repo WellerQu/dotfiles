@@ -3,7 +3,8 @@
 # install list:
 # brew install tmux
 # brew install tig
-# brew install vim --with-lua --with-override=system-vi
+# brew install vim --with-lua --with-override=system-vi --with-python
+# brew install thefuck
 # brew install ctags-exuberant
 # brew link --overwrite ctags
 
@@ -11,10 +12,13 @@
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
+# tmux plugins manager
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 # set -e
 # set -x
 
-dotfiles=(".zshrc" ".vimrc" ".gitconfig" ".gitmessage" ".tmux.conf")
+dotfiles=(".zshrc" ".vimrc" ".gitconfig" ".gitmessage" ".tmux.conf" ".myclirc")
 
 create_symlinks() {
   for file in "${dotfiles[@]}"

@@ -82,6 +82,10 @@ source $ZSH/oh-my-zsh.sh
 # else
 #   export EDITOR='mvim'
 # fi
+# whatever, vim is the main editor
+export EDITOR='vim'
+# For homebrew
+export HOMEBREW_GITHUB_API_TOKEN="ea6d0ad0ac572fe020f512ea62eec9d328cc86b9"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -106,6 +110,7 @@ alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/co
 source ~/dotfiles/go.sh
 source ~/dotfiles/java.sh
 source ~/dotfiles/mongo.sh
+source ~/dotfiles/thefuck.sh
 
 # Startup
 source ~/dotfiles/.zsh.startup
