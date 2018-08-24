@@ -151,6 +151,7 @@ Plug 'LucHermitte/local_vimrc'
 "Plug 'xolox/vim-misc'  " vim-easytags requires this
 "Plug 'xolox/vim-easytags'
 Plug 'mxw/vim-jsx'
+Plug 'klen/python-mode'
 call plug#end()
 
 " -------------------------------------------------------------------------------
