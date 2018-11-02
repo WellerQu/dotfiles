@@ -7,6 +7,9 @@
 	autocrlf = input
 [diff]
 	tool = vimdiff
+[paper]
+    diff = diff-so-fancy | less --tabs=1,5 -RFX
+    show = diff-so-fancy | less --tabs=1,5 -RFX
 [merge]
 	tool = vimdiff
 [difftool]
