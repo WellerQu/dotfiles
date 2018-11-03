@@ -85,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # whatever, vim is the main editor
 export EDITOR='vim'
 # For homebrew
-export HOMEBREW_GITHUB_API_TOKEN="ea6d0ad0ac572fe020f512ea62eec9d328cc86b9"
+export HOMEBREW_GITHUB_API_TOKEN="30da8365a6de6d18d5e905567e20d2eed335f3de"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -102,9 +102,14 @@ export HOMEBREW_GITHUB_API_TOKEN="ea6d0ad0ac572fe020f512ea62eec9d328cc86b9"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias vim="/usr/local/bin/vim"
-alias vi="/usr/local/vi"
+alias vi="/usr/local/bin/vim"
 alias rm="rm -i"
 alias code='/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'
+alias cat='bat'
+alias ping='prettyping --nolegend'
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
+alias help='tldr'
 
 # Export environmant variable
 source ~/dotfiles/go.sh

@@ -5,8 +5,13 @@
 # brew install tig
 # brew install vim --with-lua --with-override=system-vi --with-python
 # brew install thefuck
-# brew install ctags-exuberant
-# brew link --overwrite ctags
+# brew install bat # enhance cat command
+# brew install prettyping # enhance ping command
+# brew install fzf # replace Ctrl+R
+# brew install diff-so-fancy # work with git
+# brew install fd # enhance find command
+# brew install ncdu # enhance du -sh
+# brew install tldr # TL;DR replace man command
 
 # zsh plugins:
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
