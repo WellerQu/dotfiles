@@ -17,9 +17,9 @@ filetype plugin on  " Loading the plugin files for specific file types
 filetype indent on  " Loading the indent file for specific file types with
 
 " Tab and Indent
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
 set smarttab
 set expandtab  " Use the space to instead of tab
 set autoindent  " Copy indent from current line when starting a new line
@@ -97,15 +97,11 @@ xnoremap <  <gv
 xnoremap >  >gv
 
 " -------------------------------------------------------------------------------
-" Enhanced
-" -------------------------------------------------------------------------------
-
-au BufRead,BufNewFile *.md set filetype=markdown  " .md default is modula2
-
-" -------------------------------------------------------------------------------
 " Plugins
 " -------------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
+" Local
+Plug '/usr/local/opt/fzf'
 " FE dev
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
@@ -114,12 +110,17 @@ Plug 'ternjs/tern_for_vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'posva/vim-vue'
-"Plug 'isRuslan/vim-es6'
+Plug 'quramy/tsuquyomi'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/vim-js-pretty-template'
+Plug 'mhartington/vim-typings'
 Plug 'SirVer/ultisnips'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'Chiel92/vim-autoformat'
 " Golang"
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'majutsushi/tagbar'
@@ -151,7 +152,7 @@ Plug 'LucHermitte/local_vimrc'
 "Plug 'xolox/vim-misc'  " vim-easytags requires this
 "Plug 'xolox/vim-easytags'
 Plug 'mxw/vim-jsx'
-Plug 'klen/python-mode'
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
 
 " -------------------------------------------------------------------------------
@@ -429,7 +430,7 @@ nmap <leader>t :TagbarOpenAutoClose<CR>
 " -------------------------------------------------------------------------------
 " mru
 " -------------------------------------------------------------------------------
-let g:MRU_File = '~/.vim/mru'
+let g:MRU_File = $HOME . '/.vim/.vim_mru_files' 
 let g:MRU_Max_Entries = 20
 let g:MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'  " For Unix
 let g:MRU_Include_Files = '\.c$\|\.h$|\.js[x]?$'
@@ -467,6 +468,13 @@ let g:MRU_Add_Menu = 0
 " fatih/vim-go
 " https://github.com/fatih/vim-go#features
 " -------------------------------------------------------------------------------
+au BufRead,BufNewFile *.go set filetype=go
+
+" -------------------------------------------------------------------------------
+" Markdown
+" -------------------------------------------------------------------------------
+
+au BufRead,BufNewFile *.md set filetype=markdown  " .md default is modula2
 
 " -------------------------------------------------------------------------------
 " ref: http://stackoverflow.com/questions/158968/changing-vim-indentation-behavior-by-file-type
@@ -480,6 +488,11 @@ autocmd FileType vim setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 " autocmd InsertLeave,WinEnter * set cursorline
 " autocmd InsertEnter,WinLeave * set nocursorline
+
+" -------------------------------------------------------------------------------
+" python-mode/python-mode
+" -------------------------------------------------------------------------------
+let g:pymode_python = 'python3'
 
 " -------------------------------------------------------------------------------
 " Others

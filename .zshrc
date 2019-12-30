@@ -85,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # whatever, vim is the main editor
 export EDITOR='vim'
 # For homebrew
-export HOMEBREW_GITHUB_API_TOKEN="30da8365a6de6d18d5e905567e20d2eed335f3de"
+export HOMEBREW_GITHUB_API_TOKEN="8cd4551e7cc32cddb6a49f94e23e39a154443e0b"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -110,12 +110,26 @@ alias ping='prettyping --nolegend'
 alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias du='ncdu --color dark -rr -x --exclude .git --exclude node_modules'
 alias help='tldr'
+alias gc='git commit -m '
+alias gcz='git cz'
+
+alias remote='ssh -p 2222 `whoami`@go.hualala.com'
+alias upload='sftp -P 2221 `whoami`@go.hualala.com'
+
+# Proxy list
+alias proxy='export all_proxy=socks5://127.0.0.1:1086 && curl cip.cc'
+alias unproxy='unset all_proxy'
 
 # Export environmant variable
 source ~/dotfiles/go.sh
+source ~/dotfiles/rust.sh
 source ~/dotfiles/java.sh
 source ~/dotfiles/mongo.sh
 source ~/dotfiles/thefuck.sh
+source ~/dotfiles/key-bindings.zsh
+source ~/dotfiles/completion.zsh
+source ~/dotfiles/binutils.sh
+source ~/dotfiles/flutter.sh
 
 # Startup
 source ~/dotfiles/.zsh.startup

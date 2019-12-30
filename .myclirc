@@ -102,9 +102,7 @@ Token.Toolbar.Arg.Text = nobold
 
 # Favorite queries.
 [favorite_queries]
-query_res = select * from hb_ops_resource where s_id = $1
-save_res = "insert into hb_ops_resource (s_parent_id, s_name, s_source_key, s_type, s_source_url) values ($1, '$2', '$3', $4, '$5')"
-quali = select * from project_qualification_apply_info where uid = $1
+report = select * from report order by insert_at desc limit 10
 
 # Use the -d option to reference a DSN.
 [alias_dsn]
@@ -123,7 +121,7 @@ local = mysql://root:root@localhost:3306
 # port = 3306
 
 # Connect via a socket.
-socket = '/tmp/mysql.sock'
+socket = /tmp/mysql.sock
 
 # Use the UTF-8 character set
 default-character-set = utf-8
@@ -144,4 +142,4 @@ local-infile = on
 loose-local-infile = on
 
 # Configure the pager
-pager = 'vim -'
+pager = vim -
