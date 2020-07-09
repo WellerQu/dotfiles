@@ -100,8 +100,8 @@ xnoremap >  >gv
 " Plugins
 " -------------------------------------------------------------------------------
 call plug#begin('~/.vim/plugged')
-" Local
-Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 " FE dev
 Plug 'hail2u/vim-css3-syntax'
 Plug 'cakebaker/scss-syntax.vim'
@@ -154,6 +154,11 @@ Plug 'LucHermitte/local_vimrc'
 Plug 'mxw/vim-jsx'
 Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 call plug#end()
+
+" -------------------------------------------------------------------------------
+" fzf
+" -------------------------------------------------------------------------------
+set rtp+=/usr/local/opt/fzf
 
 " -------------------------------------------------------------------------------
 " Ag

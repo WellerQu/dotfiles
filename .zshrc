@@ -122,8 +122,8 @@ alias unproxy='unset all_proxy'
 
 # Export environmant variable
 source ~/dotfiles/go.sh
-source ~/dotfiles/rust.sh
-source ~/dotfiles/java.sh
+#source ~/dotfiles/rust.sh
+#source ~/dotfiles/java.sh
 source ~/dotfiles/mongo.sh
 source ~/dotfiles/thefuck.sh
 source ~/dotfiles/key-bindings.zsh
@@ -131,5 +131,8 @@ source ~/dotfiles/completion.zsh
 source ~/dotfiles/binutils.sh
 source ~/dotfiles/flutter.sh
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
 # Startup
 source ~/dotfiles/.zsh.startup
+
