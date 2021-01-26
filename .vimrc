@@ -109,7 +109,6 @@ Plug 'mattn/emmet-vim'
 Plug 'ternjs/tern_for_vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'posva/vim-vue'
 Plug 'quramy/tsuquyomi'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'leafgarland/typescript-vim'
@@ -121,12 +120,14 @@ Plug 'Chiel92/vim-autoformat'
 " Golang"
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
 Plug 'mdempsky/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+" Rust""
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'majutsushi/tagbar'
 " Common
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
@@ -138,6 +139,7 @@ Plug 'ervandew/supertab'
 Plug 'kristijanhusak/vim-hybrid-material'
 Plug 'wakatime/vim-wakatime'
 Plug 'scrooloose/nerdcommenter'
+Plug 'vim-syntastic/syntastic'
 "Plug 'prettier/vim-prettier', {
 "    \ 'do': 'npm install',
 "    \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss'] }
@@ -196,6 +198,9 @@ let g:NERDTreeIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
 
 " -------------------------------------------------------------------------------
 " easymotion + incsearch + fuzzy
@@ -374,6 +379,28 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 
 " -------------------------------------------------------------------------------
+" rust-lang/rust.vim
+" -------------------------------------------------------------------------------
+let g:rustfmt_autosave = 1
+
+" -------------------------------------------------------------------------------
+" racer-rust/vim-racer
+" -------------------------------------------------------------------------------
+
+let g:racer_experimental_completer = 1
+
+augroup Racer
+  autocmd!
+  autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
+  autocmd FileType rust nmap <buffer> gs         <Plug>(rust-def-split)
+  autocmd FileType rust nmap <buffer> gx         <Plug>(rust-def-vertical)
+  autocmd FileType rust nmap <buffer> gt         <Plug>(rust-def-tab)
+  autocmd FileType rust nmap <buffer> <leader>gd <Plug>(rust-doc)
+  autocmd FileType rust nmap <buffer> <leader>gD <Plug>(rust-doc-tab)
+augroup END
+
+
+" -------------------------------------------------------------------------------
 " javascript-libraries-syntax.vim
 " -------------------------------------------------------------------------------
 let g:used_javascript_libs = 'react,vue'
@@ -498,6 +525,18 @@ autocmd FileType vue setlocal shiftwidth=2 tabstop=2 softtabstop=2 expandtab
 " python-mode/python-mode
 " -------------------------------------------------------------------------------
 let g:pymode_python = 'python3'
+
+" --
+" Syntastic
+" --
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 " -------------------------------------------------------------------------------
 " Others

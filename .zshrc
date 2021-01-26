@@ -122,7 +122,7 @@ alias unproxy='unset all_proxy'
 
 # Export environmant variable
 source ~/dotfiles/go.sh
-#source ~/dotfiles/rust.sh
+source ~/dotfiles/rust.sh
 #source ~/dotfiles/java.sh
 source ~/dotfiles/mongo.sh
 source ~/dotfiles/thefuck.sh
