@@ -85,7 +85,7 @@ source $ZSH/oh-my-zsh.sh
 # whatever, vim is the main editor
 export EDITOR='vim'
 # For homebrew
-export HOMEBREW_GITHUB_API_TOKEN="8cd4551e7cc32cddb6a49f94e23e39a154443e0b"
+export HOMEBREW_GITHUB_API_TOKEN="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"
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -130,6 +130,7 @@ source ~/dotfiles/key-bindings.zsh
 source ~/dotfiles/completion.zsh
 source ~/dotfiles/binutils.sh
 source ~/dotfiles/flutter.sh
+source ~/dotfiles/jumper.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

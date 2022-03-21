@@ -1,0 +1,33 @@
+#!/usr/bin/expect -f
+
+#set otp [lindex $argv 0 ]
+
+set toip [lindex $argv 1 ]
+set timeout 5
+set count 0
+
+
+#spawn ssh -p 2222 qiuwei@go.bizseer.com
+spawn sftp -P 2222 qiuwei@go.bizseer.com
+
+expect {
+    "*MFA auth*" {
+        set count [expr $count + 1]
+
+        if { $count > 1 } {
+            sleep 1
+        }
+
+        set otp [exec python3 /Users/qiuwei/dotfiles/otp.py]
+        send "$otp\r"
+        exp_continue
+    }
+    "Opt>" {
+        send "p\r"
+    }
+}
+
+interact
+
+#expect eof
+close $spawn_id
