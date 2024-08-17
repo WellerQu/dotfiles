@@ -1,0 +1,41 @@
+" -------------------------------------------------------------------------------
+" General set up
+" -------------------------------------------------------------------------------
+set t_Co=256 " 使用256配色
+set background=dark
+
+set relativenumber  " Set the line number
+set autochdir  " Set the current dir as thr work dir
+set clipboard=unnamed " Share clipboard with mac os
+
+set showmode  " Show the current mode
+
+set list
+set listchars=tab:>-,trail:.
+
+set nobackup
+set fileencodings=utf-8,gb18030,cp936,big5 " Set the encode
+
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set smarttab
+set expandtab  " Use the space to instead of tab
+set autoindent  " Copy indent from current line when starting a new line
+set smartindent
+set cindent
+
+if exists('$TMUX')
+    set term=screen-256color
+endif
+
+"Fast reloading of the .vimrc
+map <silent> <leader>vs :source ~/.vimrc<cr>
+"Fast editing of .vimrc
+map <silent> <leader>ve :e ~/.vimrc<cr>
+"When .vimrc is edited, reload it
+autocmd! bufwritepost .vimrc source ~/.vimrc 
+
+filetype on  " File type detection
+
+syntax on  " Syntax highlighting

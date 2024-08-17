@@ -1,0 +1,9 @@
+echo "initialized golang environment"
+
+# refer https://go.dev/doc/install/source#environment
+
+export GOROOT="$HOME/Library/go/1.18.1"
+export GOPATH="$HOME/Workspace/Backends/go"
+export GOENV="$GOPATH/env"
+
+export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
